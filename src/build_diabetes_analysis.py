@@ -387,7 +387,7 @@ def write_report_md(quality: dict, prep: dict, eda: dict, model_outputs: dict, c
 
 ## Executive Summary
 
-This portfolio project simulates a client engagement for analyzing a real diabetes dataset. The objective is to identify the health indicators most associated with diabetes and build a simple predictive model that can estimate diabetes risk from patient characteristics.
+This project analyzes a real public diabetes dataset to identify the health indicators most associated with diabetes and build a predictive model that can estimate diabetes risk from patient characteristics.
 
 The analysis found that Glucose is the strongest risk signal, followed by BMI and Age. Patients with higher glucose values and higher BMI showed visibly higher diabetes rates. The best-performing model was **{model_outputs['best_model_name']}**, selected using ROC-AUC on the test set.
 
@@ -439,7 +439,7 @@ Correlation with diabetes outcome:
 
 ## Visual Findings
 
-Recommended portfolio charts:
+Recommended dashboard charts:
 
 - Feature distributions by outcome: `{Path(charts['feature_distributions']).name}`
 - Outcome boxplots: `{Path(charts['boxplots']).name}`
@@ -538,45 +538,10 @@ Use a clean healthcare analytics layout with a white background, muted teal for 
     return path
 
 
-def write_portfolio_assets() -> Path:
-    assets = """# Portfolio Assets
-
-## Best Screenshots
-
-1. Correlation heatmap showing relationships between diabetes indicators.
-2. Glucose vs BMI scatterplot colored by diabetes outcome.
-3. Model performance comparison chart.
-4. Feature importance chart.
-5. Final report executive summary section.
-
-## Best Charts for Portfolio
-
-- `03_correlation_heatmap.png`
-- `04_scatter_glucose_bmi.png`
-- `07_model_performance_comparison.png`
-- `10_feature_importance.png`
-
-## Suggested Portfolio Project Title
-
-Diabetes Risk Analysis and Predictive Modeling Using Python
-
-## Suggested 60-Second Video Script
-
-In this project, I analyzed a real diabetes dataset to identify the patient indicators most associated with diabetes risk. I started with data quality checks, handled invalid zero values in medical columns, treated outliers, and prepared the data for analysis. Then I built visualizations to compare glucose, BMI, age, blood pressure, and insulin across diabetes outcomes. The analysis showed that glucose was the strongest risk indicator, followed by BMI and age. I also trained and compared multiple machine learning models, including Logistic Regression, Random Forest, and a boosting model, then selected the best model using ROC-AUC and other classification metrics. Finally, I translated the findings into business recommendations and designed a Power BI dashboard specification for healthcare decision-makers.
-
-## Short Portfolio Description
-
-End-to-end diabetes data analysis project using Python, Pandas, Seaborn, and Scikit-Learn. Includes data cleaning, EDA, visual storytelling, predictive modeling, feature importance, business recommendations, and a Power BI dashboard design specification.
-"""
-    path = REPORT_DIR / "Portfolio_Assets_Guide.md"
-    path.write_text(assets, encoding="utf-8")
-    return path
-
-
 def write_docx_report(markdown_report_path: Path, charts: dict) -> Path:
     doc = Document()
     doc.add_heading("Diabetes Risk Analysis and Predictive Modeling", level=0)
-    doc.add_paragraph("Professional portfolio report for a client-style diabetes data analysis project.")
+    doc.add_paragraph("Professional report for a diabetes risk analysis and prediction project.")
 
     sections = [
         ("Executive Summary", "This project identifies the strongest indicators associated with diabetes and compares machine learning models for risk prediction."),
@@ -606,7 +571,7 @@ def write_notebook() -> Path:
     nb = nbf.v4.new_notebook()
     cells = []
 
-    cells.append(nbf.v4.new_markdown_cell("# Diabetes Risk Analysis and Predictive Modeling\n\nClient-style portfolio notebook covering data cleaning, EDA, visualization, predictive modeling, explainability, and business recommendations."))
+    cells.append(nbf.v4.new_markdown_cell("# Diabetes Risk Analysis and Predictive Modeling\n\nNotebook covering data cleaning, EDA, visualization, predictive modeling, explainability, and healthcare analytics recommendations."))
     cells.append(nbf.v4.new_markdown_cell("## 1. Business Understanding\n\nObjective: identify which patient characteristics are most associated with diabetes and build a practical model to estimate risk from biometric indicators."))
     cells.append(nbf.v4.new_code_cell("""from pathlib import Path
 import pandas as pd
@@ -701,7 +666,7 @@ model_specs = {
 
 fitted_models, rows, roc_data = {}, [], {}
 for name, (pipeline, grid) in model_specs.items():
-    search = GridSearchCV(pipeline, grid, scoring="roc_auc", cv=cv, n_jobs=-1)
+    search = GridSearchCV(pipeline, grid, scoring="roc_auc", cv=cv, n_jobs=1)
     search.fit(X_train, y_train)
     best = search.best_estimator_
     y_pred = best.predict(X_test)
@@ -748,23 +713,22 @@ plt.tight_layout()"""))
         "language_info": {"name": "python", "version": "3.12"},
     }
 
-    path = NOTEBOOK_DIR / "Diabetes_Risk_Analysis_Portfolio.ipynb"
+    path = NOTEBOOK_DIR / "Diabetes_Risk_Analysis.ipynb"
     nbf.write(nb, path)
     return path
 
 
 def write_readme(model_outputs: dict) -> Path:
-    readme = f"""# Diabetes Risk Analysis Portfolio Project
+    readme = f"""# Diabetes Risk Analysis and Prediction
 
-Client-style data analysis and machine learning project using a real diabetes dataset.
+Data analysis and machine learning project using a real public diabetes dataset.
 
 ## Deliverables
 
-- Jupyter Notebook: `notebooks/Diabetes_Risk_Analysis_Portfolio.ipynb`
+- Jupyter Notebook: `notebooks/Diabetes_Risk_Analysis.ipynb`
 - Report Markdown: `reports/Diabetes_Risk_Analysis_Report.md`
 - Report Word: `reports/Diabetes_Risk_Analysis_Report.docx`
 - Power BI dashboard specification: `reports/PowerBI_Dashboard_Design_Specification.md`
-- Portfolio guide and 60-second script: `reports/Portfolio_Assets_Guide.md`
 - Charts: `assets/charts/`
 - Source notes: `DATASET_SOURCE.md`
 
@@ -779,7 +743,7 @@ Best model: **{model_outputs['best_model_name']}**
 Run the project:
 
 ```bash
-python src/build_diabetes_portfolio.py
+python src/build_diabetes_analysis.py
 ```
 """
     path = PROJECT_DIR / "README.md"
@@ -808,7 +772,6 @@ def main() -> None:
     write_source_notes(quality)
     report_md = write_report_md(quality, prep, eda, model_outputs, charts)
     write_dashboard_spec()
-    write_portfolio_assets()
     write_docx_report(report_md, charts)
     write_notebook()
     write_readme(model_outputs)

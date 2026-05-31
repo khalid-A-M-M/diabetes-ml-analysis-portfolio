@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This portfolio project simulates a client engagement for analyzing a real diabetes dataset. The objective is to identify the health indicators most associated with diabetes and build a simple predictive model that can estimate diabetes risk from patient characteristics.
+This project analyzes a real public diabetes dataset to identify the health indicators most associated with diabetes and build a predictive model that can estimate diabetes risk from patient characteristics.
 
 The analysis found that Glucose is the strongest risk signal, followed by BMI and Age. Patients with higher glucose values and higher BMI showed visibly higher diabetes rates. The best-performing model was **Random Forest**, selected using ROC-AUC on the test set.
 
@@ -81,7 +81,7 @@ Correlation with diabetes outcome:
 
 ## Visual Findings
 
-Recommended portfolio charts:
+Recommended dashboard charts:
 
 - Feature distributions by outcome: `01_feature_distributions.png`
 - Outcome boxplots: `02_outcome_boxplots.png`
