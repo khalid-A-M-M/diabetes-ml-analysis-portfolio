@@ -1,0 +1,17 @@
+{
+  "project_dir": "C:\\Users\\Yasser\\Documents\\New project\\Diabetes_Client_Portfolio_Project",
+  "records": 768,
+  "features": 8,
+  "best_model": "Random Forest",
+  "best_model_metrics": {
+    "Model": "Random Forest",
+    "Best_Params": "{\"model__max_depth\": 5, \"model__min_samples_leaf\": 5, \"model__n_estimators\": 150}",
+    "CV_ROC_AUC": 0.839,
+    "Accuracy": 0.734,
+    "Precision": 0.659,
+    "Recall": 0.5,
+    "F1": 0.568,
+    "ROC_AUC": 0.812
+  },
+  "charts_created": 10
+}

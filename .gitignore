@@ -1,0 +1,8 @@
+.matplotlib/
+.joblib_tmp/
+__pycache__/
+*/__pycache__/
+docx_render/
+reports/docx_render/
+*.pyc
+.ipynb_checkpoints/
